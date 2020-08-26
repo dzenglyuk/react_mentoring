@@ -19,7 +19,7 @@ const Demo = ({ pages, IconComponent }) => {
                 }}
             >
                 <Menu theme={'dark'} mode="inline" defaultSelectedKeys={['1']}>
-                    {pages.map((page, index) => <Menu.Item key={index + 1} icon={index > 0 ? <IconComponent number={index}/> : <HomeOutlined />}><Link to={page.path}>{page.title}</Link></Menu.Item>)}
+                    {pages.map((page, index) => <Menu.Item key={index + 1} icon={index > 0 ? <IconComponent number={index} /> : <HomeOutlined />}><Link to={page.path}>{page.title}</Link></Menu.Item>)}
                 </Menu>
             </Sider>
             <Layout className="site-layout">
