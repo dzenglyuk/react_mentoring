@@ -1,40 +1,42 @@
 import React from 'react';
 import { Menu, Layout } from 'antd';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { HomeOutlined } from '@ant-design/icons';
+import NumberIcon from '../../components/NumberIcon';
 
 import pages from '../paths/index';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const Demo = ({ pages }) => {
+const Demo = ({ pages, IconComponent }) => {
     return <Router>
-        <Sider
-            // collapsible
-
-            style={{
-                overflow: 'auto',
-                height: '100vh',
-                position: 'fixed',
-                left: 0,
-            }}
-        >
-            <Menu theme={'dark'} mode="inline">
-                {pages.map((page, index) => <Menu.Item key={index + 1}><Link to={page.path}>{page.title}</Link></Menu.Item>)}
-            </Menu>
-        </Sider>
-        <Layout className="site-layout" style={{ marginLeft: 200, height: '100%' }}>
-            <Header className="site-layout-background" style={{ padding: 12 }}>Header</Header>
-            <Content style={{ margin: '12px 4px 0 0', overflow: 'initial' }}>
-                <Switch>
-                    {pages.map((page, index) => <Route key={index} exact path={page.path} component={page.component} />)}
-                </Switch>
-            </Content>
+        <Layout>
+            <Sider
+                collapsible
+                style={{
+                    overflow: 'auto',
+                    height: '100vh'
+                }}
+            >
+                <Menu theme={'dark'} mode="inline" defaultSelectedKeys={['1']}>
+                    {pages.map((page, index) => <Menu.Item key={index + 1} icon={index > 0 ? <IconComponent number={index}/> : <HomeOutlined />}><Link to={page.path}>{page.title}</Link></Menu.Item>)}
+                </Menu>
+            </Sider>
+            <Layout className="site-layout">
+                <Header className="site-layout-background" style={{ color: '#ffffff', fontSize: '1.5em' }}>Header</Header>
+                <Content>
+                    <Switch>
+                        {pages.map((page, index) => <Route key={index} exact path={page.path} component={page.component} />)}
+                    </Switch>
+                </Content>
+            </Layout>
         </Layout>
     </Router >
 }
 
 Demo.defaultProps = {
-    pages: pages
+    pages: pages,
+    IconComponent: NumberIcon
 }
 
 export default Demo;
