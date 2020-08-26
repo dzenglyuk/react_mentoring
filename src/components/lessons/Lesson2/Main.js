@@ -30,18 +30,18 @@ PropTypesLesson.propTypes = {
     }
 }
 
-const DumbComponent = ({ loadCounter, data }) => {
+const DumbComponent = ({ data }) => {
     // const val = (value || defaultValue).toString()
 
     return <div>
-        DATA №: {loadCounter + 1}
+        DATA
         {(data || []).map((item, index) => <div key={index}>{`${item}`}</div>)}
     </div>
 }
 
 const loadFuncDefault = () => ['FIRST', 'FIRSTER', 'SECOND'];
 
-const Loader = ({ loadCounter, loadFunc, DisplayComponent, LoadingComponent }) => {
+const Loader = ({ loadFunc, DisplayComponent, LoadingComponent }) => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
@@ -51,12 +51,16 @@ const Loader = ({ loadCounter, loadFunc, DisplayComponent, LoadingComponent }) =
             setData(loadFunc());
         }
         setLoading(true);
-        setTimeout(onLoad, 1 * 1000);
-    }, [loadCounter, loadFunc]);
+        const timeoutId = setTimeout(onLoad, 1 * 1000);
+
+        return () => {
+            clearTimeout(timeoutId)
+        }
+    }, [loadFunc]);
 
     if (loading) return <LoadingComponent />;
 
-    return <DisplayComponent loadCounter={loadCounter} data={data} />
+    return <DisplayComponent data={data} />
 }
 Loader.defaultProps = {
     loadFunc: loadFuncDefault,
@@ -77,7 +81,7 @@ const Lesson2 = () => {
 
         {/* <button onClick={() => setCounter(counter + 1)}>CLICKED ME {counter} TIMES</button> */}
         <button onClick={() => setLoadCounter(loadCounter + 1)}>Load Data</button>
-        <Loader loadCounter={loadCounter} loadFunc={loadFunc} />
+        <Loader key={loadCounter} loadFunc={loadFunc} />
     </React.Fragment>
 }
 
