@@ -1,0 +1,21 @@
+.rowcheg{
+    display: flex;
+    flex-direction: row;
+}
+.columncheg{
+    display: flex;
+    flex-direction: column;
+}
+
+.columns-container > .rowcheg{
+    margin: 10px;
+}
+
+.columns-container > .rowcheg > .columncheg{
+    margin: 10px;
+    margin-left: 0;
+}
+
+.columns-container > .rowcheg > .columncheg + .columncheg{
+    margin-left: 10px;
+}
