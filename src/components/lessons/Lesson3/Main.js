@@ -17,19 +17,19 @@ const WrappedComponentWithHello = ourWithHelloWorld(ComponentForWrap);
 //const ourConnect = (mapStateToProps, mapDispatchToProps) => WrappedComponent => props => <WrappedComponent {...props} {...mapStateToProps(store.getState())} {...mapDispatchToProps(store.dispatch)} />
 
 function chunkArray(arr, cols) {
-	if (cols < 2) return [arr];
+  if (cols < 2) return [arr];
 
-	const length = arr.length,
-			isEven = length % cols === 0;
-	let result = [],
-		i = 0;
-	 
-	while (i < length) {
-			let size = isEven ? Math.floor(length / cols) : Math.ceil((length - i) / cols--);
-			result.push(arr.slice(i, (i += size)));
-	}
+  const length = arr.length,
+    isEven = length % cols === 0;
+  let result = [],
+    i = 0;
 
-	return result;
+  while (i < length) {
+    let size = isEven ? Math.floor(length / cols) : Math.ceil((length - i) / cols--);
+    result.push(arr.slice(i, (i += size)));
+  }
+
+  return result;
 }
 
 const ColumnSplitter = React.memo(({ children, itemsInColumns }) => {
@@ -71,7 +71,7 @@ const Lesson3 = () => {
   return (
     <React.Fragment>
       <WrappedComponentWithHello />
-			<ColumnSplitter itemsInColumns={5}>{columns}</ColumnSplitter>
+      <ColumnSplitter itemsInColumns={5}>{columns}</ColumnSplitter>
     </React.Fragment>
   );
 };
