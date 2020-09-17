@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-const TableDataProvider = ({ filters, children }) => {
+const TableDataProvider = React.memo(({ filters, children }) => {
     const data = [
         {
             key: '1',
@@ -29,6 +29,6 @@ const TableDataProvider = ({ filters, children }) => {
     ];
 
     return useMemo(() => children(data), [children, data]);
-}
+})
 
 export default TableDataProvider;

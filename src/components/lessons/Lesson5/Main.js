@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Main from './partials/index';
+import TableWithLoader from './TableWithLoader';
 
 const Lesson5 = ({ }) => {
     return <React.Fragment>
-        <Main />
+        <TableWithLoader />
     </React.Fragment>
 }
 

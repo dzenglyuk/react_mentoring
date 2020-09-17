@@ -4,24 +4,24 @@ import Filters from './Filters';
 import ColumnsProvider from './ColumnsProvider';
 import TableDataProvider from './TableDataProvider';
 
-const Main = ({ filterProps, ...props }) => {
+const Main = ({ filterProps, defaultData, defaultFilters, ...props }) => {
     // filters = Array of {name: string, value: array of object}
-    const [filters, setFilters] = useState(filterProps?.defaultFilters ?? []);
-    // const renderTable = (columns, data, ...rest) => {
-    //     return <Table {...props} data={data} columns={columns} />
-    // }
+    const [filters, setFilters] = useState(defaultFilters ?? []);
+    const [data, setData] = useState(defaultData ?? []);
 
     return <div>
-        <Filters defaultFilters={filters} onChange={setFilters} {...filterProps} />
-        <TableDataProvider filters={filters}>
+        <ColumnsProvider>
             {
-                data => <ColumnsProvider>
+                columns => <TableDataProvider data={data} columns={columns} filters={filters}>
                     {
-                        (columns) => <Table {...props} data={data} columns={columns} />
+                        filteredData => <React.Fragment>
+                            <Filters columns={columns} defaultFilters={filters} onChange={setFilters} {...filterProps} />
+                            <Table {...props} data={filteredData} columns={columns} />
+                        </React.Fragment>
                     }
-                </ColumnsProvider>
+                </TableDataProvider>
             }
-        </TableDataProvider>
+        </ColumnsProvider>
     </div>
 }
 

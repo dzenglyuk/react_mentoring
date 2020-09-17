@@ -13,3 +13,17 @@
 //         dispatch(fetchError(res))
 //     }
 // }
+import React from 'react';
+
+class Loader extends React.PureComponent {
+    handleLoad() {
+
+    }
+
+    render() {
+        const { children } = this.props;
+        return children ? children(this.handleLoad, this.props, this) : null;
+    }
+}
+
+export default Loader;
