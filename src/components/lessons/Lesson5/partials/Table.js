@@ -9,4 +9,4 @@ Table.defaultProps = {
     pagination: false
 }
 
-export default Table;
+export default React.memo(Table);

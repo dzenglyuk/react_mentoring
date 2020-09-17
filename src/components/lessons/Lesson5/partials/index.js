@@ -4,10 +4,9 @@ import Filters from './Filters';
 import ColumnsProvider from './ColumnsProvider';
 import TableDataProvider from './TableDataProvider';
 
-const Main = ({ filterProps, defaultData, defaultFilters, ...props }) => {
+const Main = ({ filterProps, data, defaultFilters, ColumnsProvider, TableDataProvider, Filters, Table, ...props }) => {
     // filters = Array of {name: string, value: array of object}
     const [filters, setFilters] = useState(defaultFilters ?? []);
-    const [data, setData] = useState(defaultData ?? []);
 
     return <div>
         <ColumnsProvider>
@@ -25,4 +24,11 @@ const Main = ({ filterProps, defaultData, defaultFilters, ...props }) => {
     </div>
 }
 
-export default Main;
+Main.defaultProps = {
+    Table,
+    Filters,
+    ColumnsProvider,
+    TableDataProvider,
+}
+
+export default React.memo(Main);

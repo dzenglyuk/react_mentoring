@@ -16,13 +16,21 @@
 import React from 'react';
 
 class Loader extends React.PureComponent {
-    handleLoad() {
+    performLoad = () => {
+
+    }
+
+    handleLoad = () => {
+        this.isLoadNeeded() && this.performLoad();
+    }
+
+    isLoadNeeded = () => {
 
     }
 
     render() {
         const { children } = this.props;
-        return children ? children(this.handleLoad, this.props, this) : null;
+        return children ? children(this.performLoad, this.props, this) : null;
     }
 }
 

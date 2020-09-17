@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import './Filters.css';
 
-const Filter = ({ onChange, ...rest }) => {
+const Filter = React.memo(({ onChange, ...rest }) => {
     return 'Filter';
-}
+})
 
 class FiltersTracker extends React.PureComponent {
     componentDidUpdate = ({ filters: prevFilters }) => {
@@ -44,4 +44,4 @@ const Filters = ({ defaultFilters, onChange, ...rest }) => {
     </div>
 }
 
-export default Filters;
+export default React.memo(Filters);

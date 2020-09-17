@@ -10,4 +10,4 @@ const TableWithLoader = (props) => {
     </React.Fragment>
 };
 
-export default TableWithLoader;
+export default React.memo(TableWithLoader);
