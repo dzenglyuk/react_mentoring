@@ -13,7 +13,7 @@ const Main = ({ filterProps, data, defaultFilters, ColumnsProvider, TableDataPro
             {
                 columns => <TableDataProvider data={data} columns={columns} filters={filters}>
                     {
-                        filteredData => <React.Fragment>
+                        (filteredData, loading, reloading) => <React.Fragment>
                             <Filters columns={columns} defaultFilters={filters} onChange={setFilters} {...filterProps} />
                             <Table {...props} data={filteredData} columns={columns} />
                         </React.Fragment>

@@ -4,16 +4,22 @@ const ColumnsProvider = ({ children }) => {
     const columns = useMemo(() => [
         {
             title: 'Name',
+            name: 'name',
+
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
         },
         {
             title: 'Age',
+            name: 'age',
+
             dataIndex: 'age',
             key: 'age',
         },
         {
             title: 'Address',
+            name: 'address',
+
             dataIndex: 'address',
             key: 'address',
         },

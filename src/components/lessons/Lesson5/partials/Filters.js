@@ -1,9 +1,41 @@
-import React, { useState } from 'react';
-
+import React, { useCallback, useMemo, useState, useRef } from 'react';
+import { Collapse, Input } from 'antd';
 import './Filters.css';
 
-const Filter = React.memo(({ onChange, ...rest }) => {
-    return 'Filter';
+const { Panel } = Collapse;
+
+function debounce(func, wait) {
+    let timeout
+    return function (...args) {
+        const context = this
+        clearTimeout(timeout)
+        timeout = setTimeout(() => func.apply(context, args), wait)
+    }
+}
+
+const FilterCollapser = React.memo(({ children, defaultIsOpened, ...rest }) => {
+    const [isOpened, setIsOpened] = useState(defaultIsOpened ?? false)
+
+    return <Collapse activeKey={isOpened ? ['1'] : []} onChange={() => setIsOpened(paramIsOpened => !paramIsOpened)}>
+        <Panel header="Filters" key="1">
+            {children}
+        </Panel>
+    </Collapse>
+})
+
+const Filter = React.memo(({ name, onChange, onClear, ...rest }) => {
+    const handleChange = useCallback(e => {
+        const val = e.target.value ?? "";
+        const callback = val !== "" ? onChange : onClear;
+
+        console.log(val);
+        callback && callback(name, val);
+    }, [name, onChange, onClear]);
+
+    return <div className={'table-filter-container'}>
+        <div>{name}:</div>
+        <Input allowClear onChange={handleChange} />
+    </div>
 })
 
 class FiltersTracker extends React.PureComponent {
@@ -22,26 +54,48 @@ class FiltersTracker extends React.PureComponent {
     }
 }
 
-const Filters = ({ defaultFilters, onChange, ...rest }) => {
+const Filters = React.memo(({ defaultFilters, debounceDelay, onChange, columns, ...rest }) => {
     const [filters, setFilters] = useState(defaultFilters ?? []);
 
-    const getHandleFilterChange = item => value => {
-        const processFilter = filter => {
-            if (filter.name !== item.name) {
-                return filter;
+    const handleFilterChange = useCallback(debounce((itemName, value) => {
+        setFilters(filters => {
+            if (!filters.some(({ name }) => itemName === name)) {
+                return [...filters, { name: itemName, values: value }];
             }
 
-            return { ...filter, values: value };
-        }
+            const processFilter = filter => {
+                if (filter.name !== itemName) {
+                    return filter;
+                }
 
-        setFilters(filters.map(processFilter));
-    }
+                return { ...filter, values: value };
+            }
 
-    return <div className={'table-filters'}>
-        Filters:
+            return filters.map(processFilter)
+        });
+    }, debounceDelay), []);
+
+    const handleFitlerClear = useCallback(debounce(itemName => {
+        setFilters(filters => filters.filter(filter => filter.name !== itemName));
+    }, debounceDelay), []);
+
+    return <FilterCollapser>
         <FiltersTracker filters={filters} onChange={onChange} />
-        {filters.map(item => <Filter onChange={getHandleFilterChange(item)} {...item} />)}
-    </div>
+        <div className={'table-filters'}>
+            {columns.map((column, index) => <Filter
+                key={index}
+
+                onChange={handleFilterChange}
+                onClear={handleFitlerClear}
+
+                {...column}
+            />)}
+        </div>
+    </FilterCollapser>
+})
+
+Filters.defaultProps = {
+    debounceDelay: 1000
 }
 
 export default React.memo(Filters);
