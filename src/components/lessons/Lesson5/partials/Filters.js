@@ -28,7 +28,6 @@ const Filter = React.memo(({ name, onChange, onClear, ...rest }) => {
         const val = e.target.value ?? "";
         const callback = val !== "" ? onChange : onClear;
 
-        console.log(val);
         callback && callback(name, val);
     }, [name, onChange, onClear]);
 
@@ -95,7 +94,7 @@ const Filters = React.memo(({ defaultFilters, debounceDelay, onChange, columns, 
 })
 
 Filters.defaultProps = {
-    debounceDelay: 1000
+    debounceDelay: 200
 }
 
 export default React.memo(Filters);

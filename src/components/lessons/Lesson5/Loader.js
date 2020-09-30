@@ -13,7 +13,39 @@
 //         dispatch(fetchError(res))
 //     }
 // }
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+
+const TestLoad = ({ onSuccess, onError }) => {
+    useEffect(() => {
+        let ignore = false;
+        const performLoad = async () => {
+            try {
+                const data = await (() => 'test')();
+
+                if (!ignore) onSuccess && onSuccess(data);
+            } catch (ex) {
+                if (!ignore) onError && onError(ex);
+            }
+            finally {
+
+            }
+        }
+
+        performLoad();
+
+        return () => {
+            ignore = true;
+        }
+    }, []);
+
+    return null;
+}
+
+const UsageOfLoader = () => {
+    const fetchId = useRef(0).current;
+
+    return <TestLoad key={fetchId++} />
+}
 
 class Loader extends React.PureComponent {
     performLoad = () => {

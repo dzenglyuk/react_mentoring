@@ -5,7 +5,7 @@ import ColumnsProvider from './ColumnsProvider';
 import TableDataProvider from './TableDataProvider';
 
 const Main = ({ filterProps, data, defaultFilters, ColumnsProvider, TableDataProvider, Filters, Table, ...props }) => {
-    // filters = Array of {name: string, value: array of object}
+    // filters = Array of {name: string, values: array of object}
     const [filters, setFilters] = useState(defaultFilters ?? []);
 
     return <div>

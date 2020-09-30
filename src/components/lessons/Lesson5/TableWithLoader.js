@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Table from './partials/index';
 import Loader from './Loader';
 
 const TableWithLoader = (props) => {
+    const [data, setData] = useState([]);
+
     return <React.Fragment>
         <Loader />
         <Table {...props} />
