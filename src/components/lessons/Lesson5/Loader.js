@@ -15,7 +15,7 @@
 // }
 import React, { useEffect, useRef } from 'react';
 
-const TestLoad = ({ onSuccess, onError }) => {
+const TestLoad = ({ requestData, onSuccess, onError }) => {
     useEffect(() => {
         let ignore = false;
         const performLoad = async () => {
@@ -36,7 +36,7 @@ const TestLoad = ({ onSuccess, onError }) => {
         return () => {
             ignore = true;
         }
-    }, []);
+    }, [requestData]);
 
     return null;
 }

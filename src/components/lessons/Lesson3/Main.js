@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 import './Main.css';
 
 const ourWithHelloWorld = (WrappedComponent) => {
-  return (props) => <WrappedComponent {...props} hello={'World'} />;
+  const res = (props) => <WrappedComponent {...props} hello={'World'} />;
+  res.displayName = WrappedComponent.displayName ?? "ourWithHelloWorld.Provider";
+
+  return res;
 };
 
 const ComponentForWrap = ({ hello, ...props }) => {
